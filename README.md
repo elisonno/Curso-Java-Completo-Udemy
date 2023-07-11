@@ -1,4 +1,4 @@
-# Curso-Java-Completo-Udemy
+# Curso de Java
 ***
 Curso completo de Java, do professor [Nelio Alves](https://www.udemy.com/course/java-curso-completo/).
 
