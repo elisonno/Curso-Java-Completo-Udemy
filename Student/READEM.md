@@ -6,15 +6,17 @@ final grade in the year. Also say if the student is approved or disapproved and,
 are missing for the student to obtain the minimum to pass (which is 60% of the grade). 
 You must create a Student class for solve this problem.
 
+EXAMPLES:
+
  Prohibited | Exit
-------------------
+------------|-----
 Alex Green  | FINAL GRADE = 90.00
 27.00       | PASS
 31.00       |
 32.00       |
 
 Prohibited | Exit
-------------------
+-----------|-------
 Alex Green  | FINAL GRADE = 52.00
 17.00       | FAILED
 20.00       | MISSING 8.00 POINTS
