@@ -5,10 +5,13 @@ of a rectangle. Then show on the screen the value of
 its area, perimeter and diagonal. 
 
 EXAMPLE:
-Enter rectangle width:
-3.00
-Enter rectangle height:
-4.00
+
+Enter rectangle width: 3.00
+
+Enter rectangle height: 4.00
+
 AREA = 12.00
+
 PERIMETER = 14.00
+
 DIAGONAL = 5.00
