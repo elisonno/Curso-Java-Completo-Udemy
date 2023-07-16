@@ -6,10 +6,10 @@ public class Application {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("How many values will each vector have? ");
-        int qunatityNumbers = sc.nextInt();
-        int[] vectorA = new int[qunatityNumbers];
-        int[] vectorB = new int[qunatityNumbers];
-        int[] vectorC = new int[qunatityNumbers];
+        int quantityNumbers = sc.nextInt();
+        int[] vectorA = new int[quantityNumbers];
+        int[] vectorB = new int[quantityNumbers];
+        int[] vectorC = new int[quantityNumbers];
 
         System.out.println("Enter the values of vector A");
         for (int i=0; i<vectorA.length; i++){
