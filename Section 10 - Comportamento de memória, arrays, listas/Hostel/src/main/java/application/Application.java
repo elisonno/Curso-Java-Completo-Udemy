@@ -16,7 +16,7 @@ public class Application {
             System.out.print("Name: ");
             String name = sc.nextLine();
             System.out.print("E-mail: ");
-            String email = sc.nextLine();
+            String email = sc.next();
             System.out.print("Room: ");
             int room = sc.nextInt();
 
