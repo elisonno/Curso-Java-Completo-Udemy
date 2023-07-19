@@ -19,44 +19,44 @@ public class Application {
         System.out.print("How many employees will be registered? ");
         numberOfEmployee = sc.nextInt();
         sc.nextLine();
+
         for (int registration = 0; registration < numberOfEmployee; registration++) {
             int id;
             String name;
             double salary;
-            existingID = false;
             System.out.printf("Emplyee #%d: \n", (registration + 1));
             System.out.print("Id: ");
             id = sc.nextInt();
             sc.nextLine();
             Employee employee = employees.stream().filter(x -> x.getId() == id).findFirst().orElse(null);
             if (employee != null) {
-                    existingID = true;
-                    System.out.println("Existing id, register the employee again");
-                    registration--;
-                }
-            if(existingID)continue;
+                System.out.println("Existing id, register the employee again");
+                registration--;
+                continue;
+            }
             System.out.print("Name: ");
             name = sc.nextLine();
             System.out.print("Salary: ");
             salary = sc.nextDouble();
             employees.add(new Employee(id, name, salary));
         }
-        do{
-        existingID = false;
-        System.out.print("Enter the employee id that will have salary increase: ");
-        idIncreaseSalary = sc.nextInt();
-        sc.nextLine();
-        for (Employee employee : employees) {
-            if (employee.getId() == idIncreaseSalary) {
+
+        do {
+            existingID = false;
+            System.out.print("Enter the employee id that will have salary increase: ");
+            idIncreaseSalary = sc.nextInt();
+            sc.nextLine();
+            Integer position = positionId(employees, idIncreaseSalary);
+            if (position != null) {
                 existingID = true;
                 System.out.print("Enter the percentage: ");
                 percentageIncrease = sc.nextDouble();
                 sc.nextLine();
-                employee.increaseSalary(percentageIncrease);
+                employees.get(position).increaseSalary(percentageIncrease);
+            } else {
+                System.out.println("This id does not exist!");
             }
-        }
-        if (!existingID) System.out.println("This id does not exist!");
-        }while(!existingID);
+        } while (!existingID);
 
         System.out.println("List of employees:");
         for (Employee employee : employees) {
@@ -65,4 +65,12 @@ public class Application {
         sc.close();
     }
 
+    public static Integer positionId(List<Employee> employees, int id) {
+        for (int position = 0; position < employees.size(); position++) {
+            if (employees.get(position).getId() == id) {
+                return position;
+            }
+        }
+        return null;
+    }
 }
