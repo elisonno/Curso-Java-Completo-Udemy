@@ -28,13 +28,12 @@ public class Application {
             System.out.print("Id: ");
             id = sc.nextInt();
             sc.nextLine();
-            for (Employee employee : employees) {
-                if (employee.getId() == id) {
+            Employee employee = employees.stream().filter(x -> x.getId() == id).findFirst().orElse(null);
+            if (employee != null) {
                     existingID = true;
                     System.out.println("Existing id, register the employee again");
                     registration--;
                 }
-            }
             if(existingID)continue;
             System.out.print("Name: ");
             name = sc.nextLine();
