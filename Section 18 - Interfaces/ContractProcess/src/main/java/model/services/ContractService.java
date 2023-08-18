@@ -3,7 +3,7 @@ package model.services;
 import model.entities.Contract;
 import model.entities.Installment;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class ContractService {
     private OnlinePaymentService onlinePaymentService;
@@ -13,16 +13,14 @@ public class ContractService {
     }
 
     public void processContract(Contract contract, Integer months){
-        for(int i=0; i<months; i++){
-            int installmentMonth = i + 1;
-            Calendar currentInstallment = Calendar.getInstance();
-            currentInstallment.setTime(contract.getDate());
-            currentInstallment.add(Calendar.MONTH, installmentMonth);
+        for(int i=1; i<=months; i++){
+            LocalDate currentDate = contract.getDate().plusMonths(i);
             double amount = contract.getTotalValue() / months;
             amount = onlinePaymentService.paymentFee(amount);
-            amount = onlinePaymentService.interest(amount,installmentMonth);
+            amount = onlinePaymentService.interest(amount,i);
 
-            contract.addInstallment(new Installment(currentInstallment.getTime(),amount));
+
+            contract.addInstallment(new Installment(currentDate,amount));
 
         }
     }
