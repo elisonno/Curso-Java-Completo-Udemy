@@ -10,10 +10,6 @@ public class Contract {
     private Double totalValue;
     private List<Installment> installment = new ArrayList<>();
 
-
-    public Contract() {
-    }
-
     public Contract(Integer number, LocalDate date, Double totalValue) {
         this.number = number;
         this.date = date;
@@ -24,32 +20,16 @@ public class Contract {
         return number;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
     public LocalDate getDate() {
         return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public Double getTotalValue() {
         return totalValue;
     }
 
-    public void setTotalValue(Double totalValue) {
-        this.totalValue = totalValue;
-    }
-
     public List<Installment> getInstallment() {
         return installment;
-    }
-
-    public void addInstallment(Installment installment){
-        this.installment.add(installment);
     }
 
 
