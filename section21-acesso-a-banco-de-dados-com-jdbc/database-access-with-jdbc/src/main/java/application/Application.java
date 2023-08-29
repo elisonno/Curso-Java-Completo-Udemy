@@ -1,33 +1,46 @@
 package application;
 
 import database.DB;
-import database.DbIntegretyException;
+import database.DbException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Application {
     public static void main(String[] args) {
 
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
+        Statement statement = null;
         try {
             connection = DB.getConnection();
-            preparedStatement = connection.prepareStatement(
-                    "DELETE FROM department "
-                    + "where "
-                    + "Id = ?");
+            connection.setAutoCommit(false);
+            statement = connection.createStatement();
 
-            preparedStatement.setInt(1, 6);
+            int rows1 = statement.executeUpdate("UPDATE seller SET BaseSalary = 2090 WHERE DepartmentId = 1");
 
-            int rowsAffected = preparedStatement.executeUpdate();
+            /*int x = 1;
+            if(x < 2){
+            throw new SQLException("Fake error");
+            }*/
 
-            System.out.println("Done! Rows Affected: " + rowsAffected);
+            int rows2 = statement.executeUpdate("UPDATE seller SET BaseSalary = 3090 WHERE DepartmentId = 2");
+
+            connection.commit();
+
+            System.out.println("Rows1: " + rows1);
+            System.out.println("Rows2: " + rows2);
         }
         catch (SQLException e){
-            throw new DbIntegretyException(e.getMessage());
+            try {
+                connection.rollback();
+                throw new DbException("Transaction rolled back! Caused by: " + e.getMessage());
+            } catch (SQLException e1) {
+                throw new DbException("Error trying to rollback! Caused by: " + e1.getMessage());
+            }
         }
         finally {
-            DB.closeStatement(preparedStatement);
+            DB.closeStatement(statement);
             DB.closeConnection();
         }
     }
