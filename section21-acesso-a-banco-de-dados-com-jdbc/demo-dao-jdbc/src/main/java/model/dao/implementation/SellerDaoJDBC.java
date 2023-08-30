@@ -49,16 +49,8 @@ public class SellerDaoJDBC implements SellerDao {
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
             if(resultSet.next()){
-                Department currentDepartment = new Department();
-                currentDepartment.setId(resultSet.getInt("DepartmentId"));
-                currentDepartment.setName(resultSet.getString("DepName"));
-                Seller currentSeller = new Seller();
-                currentSeller.setId(resultSet.getInt("Id"));
-                currentSeller.setName(resultSet.getString("Name"));
-                currentSeller.setEmail(resultSet.getString("Email"));
-                currentSeller.setBirthDate(resultSet.getDate("BirthDate"));
-                currentSeller.setBaseSalary(resultSet.getDouble("BaseSalary"));
-                currentSeller.setDepartment(currentDepartment);
+                Department currentDepartment = instantiateDepartment(resultSet);
+                Seller currentSeller = instantiateSeller(resultSet, currentDepartment);
                 return currentSeller;
             }
             return null;
@@ -72,6 +64,24 @@ public class SellerDaoJDBC implements SellerDao {
         }
 
 
+    }
+
+    private Seller instantiateSeller(ResultSet resultSet, Department currentDepartment) throws SQLException {
+        Seller currentSeller = new Seller();
+        currentSeller.setId(resultSet.getInt("Id"));
+        currentSeller.setName(resultSet.getString("Name"));
+        currentSeller.setEmail(resultSet.getString("Email"));
+        currentSeller.setBirthDate(resultSet.getDate("BirthDate"));
+        currentSeller.setBaseSalary(resultSet.getDouble("BaseSalary"));
+        currentSeller.setDepartment(currentDepartment);
+        return currentSeller;
+    }
+
+    private Department instantiateDepartment(ResultSet resultSet) throws SQLException {
+        Department currentDepartment= new Department();
+        currentDepartment.setId(resultSet.getInt("DepartmentId"));
+        currentDepartment.setName(resultSet.getString("DepName"));
+        return currentDepartment;
     }
 
     @Override
