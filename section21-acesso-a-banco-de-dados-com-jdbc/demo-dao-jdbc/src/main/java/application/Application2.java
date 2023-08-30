@@ -60,7 +60,7 @@ public class Application2 {
         for (Department departmentTest2 : departments){
             System.out.println(departmentTest2);
         }
-        
+
         sc.close();
     }
 }

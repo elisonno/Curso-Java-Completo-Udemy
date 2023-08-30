@@ -4,7 +4,6 @@ import database.DB;
 import database.DbException;
 import model.dao.DepartmentDao;
 import model.entities.Department;
-import model.entities.Seller;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -93,7 +92,7 @@ public class DepartmentDaoJDBC implements DepartmentDao {
         try {
             statement = connection.prepareStatement(
                     "SELECT * FROM department "
-                            + "WHERE department.Id = ? ");
+                            + "WHERE Id = ? ");
 
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
