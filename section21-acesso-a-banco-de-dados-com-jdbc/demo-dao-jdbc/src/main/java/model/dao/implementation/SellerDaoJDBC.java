@@ -85,7 +85,35 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public List<Seller> findAll() {
-        return null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT seller.*,department.Name as DepName "
+                            + "FROM seller INNER JOIN department "
+                            + "ON seller.DepartmentId = department.Id "
+                            + "ORDER BY Name");
+
+            resultSet = statement.executeQuery();
+
+            List<Seller> sellers = new ArrayList<>();
+            Map<Integer, Department> mapIdDepartment = new HashMap<>();
+            while (resultSet.next()) {
+                Department currentDepartment = mapIdDepartment.get(resultSet.getInt("DepartmentId"));
+                if (currentDepartment == null) {
+                    currentDepartment = instantiateDepartment(resultSet);
+                    mapIdDepartment.put(currentDepartment.getId(), currentDepartment);
+                }
+                Seller currentSeller = instantiateSeller(resultSet, currentDepartment);
+                sellers.add(currentSeller);
+            }
+            return sellers;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResulSet(resultSet);
+        }
     }
 
     @Override
@@ -107,9 +135,9 @@ public class SellerDaoJDBC implements SellerDao {
             Map<Integer, Department> mapIdDepartment = new HashMap<>();
             while (resultSet.next()) {
                 Department currentDepartment = mapIdDepartment.get(resultSet.getInt("DepartmentId"));
-                if(currentDepartment == null){
+                if (currentDepartment == null) {
                     currentDepartment = instantiateDepartment(resultSet);
-                    mapIdDepartment.put(currentDepartment.getId(),currentDepartment);
+                    mapIdDepartment.put(currentDepartment.getId(), currentDepartment);
                 }
                 Seller currentSeller = instantiateSeller(resultSet, currentDepartment);
                 sellers.add(currentSeller);
