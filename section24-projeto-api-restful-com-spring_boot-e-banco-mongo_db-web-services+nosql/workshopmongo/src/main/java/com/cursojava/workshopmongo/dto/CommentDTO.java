@@ -4,7 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
-public class CommmentDTO implements Serializable {
+public class CommentDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -12,10 +12,10 @@ public class CommmentDTO implements Serializable {
     private Date date;
     private AuthorDTO author;
 
-    public CommmentDTO() {
+    public CommentDTO() {
     }
 
-    public CommmentDTO(String text, Date date, AuthorDTO author) {
+    public CommentDTO(String text, Date date, AuthorDTO author) {
         this.text = text;
         this.date = date;
         this.author = author;
